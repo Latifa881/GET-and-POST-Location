@@ -42,25 +42,6 @@ class MainActivity : AppCompatActivity() {
 
             if (searchName.isNotEmpty()) {
                 getAllData(searchName)
-//                CoroutineScope(Dispatchers.IO).launch {
-//                    val location = async {
-//                        getAllData(searchName)
-//                    }.await()
-//
-//                    withContext(Dispatchers.Main)
-//                    {
-//                    if (location.isEmpty()) {
-//                        Toast.makeText(
-//                            this@MainActivity,
-//                            "$searchName is not found",
-//                            Toast.LENGTH_SHORT
-//                        ).show()
-//                        findViewById<TextView>(R.id.tvResults).setText("")
-//
-//                    } else {
-//                        //findViewById<TextView>(R.id.tvResults).setText("$searchName lives in $location")
-//                    }
-//                }}
             } else {
                 Toast.makeText(this@MainActivity, "Enter a name", Toast.LENGTH_SHORT).show()
 
@@ -70,7 +51,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun getAllData(name: String): String {
+    fun getAllData(name: String) {
         val apiInterface = APIClient().getClient()?.create(APIInterface::class.java)
         var location = ""
         var flag=true
@@ -90,14 +71,14 @@ class MainActivity : AppCompatActivity() {
                         if (data.name.toString().lowercase().equals(name.lowercase())) {
                             location = data.location!!
                             Log.d("location", location+ "")
-//                            Toast.makeText(
-//                                this@MainActivity,
-//                                "location:$location",
-//                                Toast.LENGTH_SHORT
-//                            ).show()
+                            Toast.makeText(
+                                this@MainActivity,
+                                "location:$location",
+                                Toast.LENGTH_SHORT
+                            ).show()
                             flag=false
 
-                            findViewById<TextView>(R.id.tvResults).setText("$name lives in $location")
+                           findViewById<TextView>(R.id.tvResults).setText("$name lives in $location")
                             progressDialog.dismiss()
                             break
                         }
@@ -115,7 +96,7 @@ class MainActivity : AppCompatActivity() {
             })
         }
 
-        return location
+
     }
 
     fun addData(name: String, location: String) {
